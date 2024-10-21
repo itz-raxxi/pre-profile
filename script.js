@@ -2,16 +2,27 @@ const fileInput = document.getElementById('file-input');
 const canvas = document.getElementById('image-canvas');
 const ctx = canvas.getContext('2d');
 const downloadButton = document.getElementById('download-button');
+const zoomInButton = document.getElementById('zoom-in-button');
+const zoomOutButton = document.getElementById('zoom-out-button');
+const moveLeftButton = document.getElementById('move-left-button');
+const moveRightButton = document.getElementById('move-right-button');
+const moveUpButton = document.getElementById('move-up-button');
+const moveDownButton = document.getElementById('move-down-button');
+const zoomControls = document.querySelector('.controls');
 
-const maskImage = new Image();
-maskImage.src = 'mask.png'; // Replace with your mask PNG URL
-  
+zoomControls.style.display = 'none'; // Initially hide the controls
+
 let userImage = new Image();
 let imageX = 0; // Position of the user image on the canvas
 let imageY = 0; // Position of the user image on the canvas
 let scale = 1; // Scale factor for zooming
-let isDragging = false; // Flag to check if the image is being dragged
-let dragStartX, dragStartY; // Starting coordinates for drag
+
+// Set fixed canvas size (1:1 ratio)
+canvas.width = 600; // Example width
+canvas.height = 600; // Example height
+
+const maskImage = new Image();
+maskImage.src = 'mask.png'; // Replace with your mask PNG URL
 
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
@@ -20,99 +31,64 @@ fileInput.addEventListener('change', (event) => {
         reader.onload = function(e) {
             userImage.src = e.target.result;
             userImage.onload = function() {
-                // Set canvas size to match the mask
-                canvas.width = maskImage.width;
-                canvas.height = maskImage.height;
+                // Center the image on the canvas
+                imageX = (canvas.width - userImage.width) / 2;
+                imageY = (canvas.height - userImage.height) / 2;
                 drawImages();
+                
+                // Show zoom and adjust buttons
+                zoomControls.style.display = 'flex'; // Show controls when an image is uploaded
             };
         };
         reader.readAsDataURL(file);
+    } else {
+        zoomControls.style.display = 'none'; // Hide controls if no file is selected
     }
 });
 
 // Function to draw images on canvas
 function drawImages() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    ctx.drawImage(userImage, imageX, imageY, maskImage.width * scale, maskImage.height * scale); // Draw user image with scaling
-    ctx.drawImage(maskImage, 0, 0, maskImage.width, maskImage.height); // Draw mask image
+    // Draw user image with scaling
+    ctx.drawImage(userImage, imageX, imageY, userImage.width * scale, userImage.height * scale); 
+    // Draw mask image at fixed size (e.g., 600x600)
+    ctx.drawImage(maskImage, 0, 0, 600, 600); // Replace 600, 600 with the actual dimensions of your mask image if different
 }
 
-// Mouse down event to start dragging
-canvas.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    dragStartX = e.offsetX - imageX; // Calculate the offset
-    dragStartY = e.offsetY - imageY;
+// Zoom In
+zoomInButton.addEventListener('click', () => {
+    scale *= 1.1; // Increase scale by 10%
+    drawImages();
 });
 
-// Mouse move event to drag the image
-canvas.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        imageX = e.offsetX - dragStartX; // Update image position
-        imageY = e.offsetY - dragStartY;
-        drawImages(); // Redraw images
-    }
+// Zoom Out
+zoomOutButton.addEventListener('click', () => {
+    scale /= 1.1; // Decrease scale by 10%
+    drawImages();
 });
 
-// Mouse up event to stop dragging
-canvas.addEventListener('mouseup', () => {
-    isDragging = false;
+// Move Left
+moveLeftButton.addEventListener('click', () => {
+    imageX -= 20; // Move left
+    drawImages();
 });
 
-// Mouse leave event to stop dragging if the mouse leaves the canvas
-canvas.addEventListener('mouseleave', () => {
-    isDragging = false;
+// Move Right
+moveRightButton.addEventListener('click', () => {
+    imageX += 20; // Move right
+    drawImages();
 });
 
-// Mouse wheel event for zooming
-canvas.addEventListener('wheel', (e) => {
-    e.preventDefault(); // Prevent default scrolling
-    const zoomFactor = 0.1; // Zoom factor
-    const mouseX = e.offsetX;
-    const mouseY = e.offsetY;
-
-    // Update scale
-    scale += (e.deltaY < 0 ? zoomFactor : -zoomFactor);
-    scale = Math.max(scale, 0.1); // Prevent scale from going below 0.1
-
-    // Adjust image position based on zoom
-    imageX = mouseX - (mouseX - imageX) * (scale / (scale - zoomFactor));
-    imageY = mouseY - (mouseY - imageY) * (scale / (scale - zoomFactor));
-    
-    drawImages(); // Redraw images
+// Move Up
+moveUpButton.addEventListener('click', () => {
+    imageY -= 20 ; // Move up
+    drawImages();
 });
 
-// Touch events for pinch-to-zoom
-let initialDistance = 0;
-
-canvas.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 2) {
-        initialDistance = Math.hypot(
-            e.touches[0].clientX - e.touches[1].clientX,
-            e.touches[0].clientY - e.touches[1].clientY
-        );
-    }
-});
-
-canvas.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 2) {
-        const currentDistance = Math.hypot(
-            e.touches[0].clientX - e.touches[1].clientX,
-            e.touches[0].clientY - e.touches[1].clientY
-        );
-
-        const zoomChange = currentDistance / initialDistance;
-        scale *= zoomChange;
-        scale = Math.max(scale, 0.1); // Prevent scale from going below 0.1
-
-        // Adjust image position based on zoom
-        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-
-        imageX = midX - (midX - imageX)
-        imageY = midY - (midY - imageY) * (scale / (scale / zoomChange));
-        
-        drawImages(); // Redraw images with updated scale and position
-    }
+// Move Down
+moveDownButton.addEventListener('click', () => {
+    imageY += 20; // Move down
+    drawImages();
 });
 
 // Function to download the canvas content as an image
@@ -125,8 +101,5 @@ downloadButton.addEventListener('click', () => {
 
 // Load the mask image and draw it once it's loaded
 maskImage.onload = () => {
-    // Set canvas size to match the mask
-    canvas.width = maskImage.width;
-    canvas.height = maskImage.height;
     drawImages(); // Initial draw
 };
