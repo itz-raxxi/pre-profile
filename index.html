@@ -1,113 +1,37 @@
-body {
-    background-image: url("background.jpg");
-    margin: 0;
-    padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRE-PROFILE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="logo">
+        <img src="chandikayaga-1.png" alt="chandikayaga" class="chandikayaga">
+    </div>
+    <div class="one-container">
+        <input type="file" id="file-input" accept="image/*">
+        <label class="custom-file-upload" for="file-input">Upload Image</label>
+    </div>
+    <div class="two-container">
+        <canvas id="image-canvas"></canvas>
+        <div class="controls">
+            <button id="zoom-in-button">Zoom In</button>
+            <button id="zoom-out-button">Zoom Out</button>
+            <button id="move-left-button">Move Left</button>
+            <button id="move-right-button">Move Right</button>
+            <button id="move-up-button">Move Up</button>
+            <button id="move-down-button">Move Down</button>
+        </div>
+        <button id="download-button">Download</button>
+    </div>
+    <div class="footer">
+        <footer>
+            <p>All credit reserved by developer<br>For more information contact on Instagram @mr_raxxi_mk</p>
+        </footer>
+    </div>
 
-input[type="file"] {
-    display: none;
-}
-
-.custom-file-upload {
-    display: inline-block;
-    background-color: rgb(241, 153, 10);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.5s ease;
-}
-
-#image-canvas {
-    border: 1px solid rgb(255, 255, 255);
-    margin: 20px auto;
-    height: 50%;
-    width: 50%;
-    max-width: 600px;
-    height: auto;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: rgb(240, 44, 44);
-}
-
-.one-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.two-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.controls button {
-    margin: 10px;
-}
-
-#download-button {
-    background: transparent;
-    color: #ffffff;
-    border: 1px solid #000;
-    border-radius: 20px;
-    padding: 14px 24px;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 200ms;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-#download-button:hover {
-    background-color: #100a0a;
-}
-
-.logo {
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-}
-
-.chandikayaga {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.footer {
-    position: relative; /* Changed from fixed to relative */
-    bottom: auto; /* Ensures no bottom offset */
-    left: 0;
-    right: 0;
-    background-color: white;
-    color: #0b0b0b;
-    text-transform: lowercase;
-    text-align: center;
-    padding: 10px;
-}
-
-/* Responsive design for mobile devices */
-@media only screen and (max-width: 768px) {
-    .footer {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        right: auto;
-    }
-}
+    <script src="script.js"></script>
+</body>
+</html>
