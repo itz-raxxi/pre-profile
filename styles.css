@@ -1,5 +1,7 @@
 body {
     background-image: url("background.jpg");
+    margin: 0;
+    padding: 0;
 }
 
 input[type="file"] {
@@ -30,23 +32,35 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: rgb(240, 44, 44);;
+    color: rgb(240, 44, 44);
 }
+
 .one-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .two-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controls button {
+    margin: 10px;
+}
+
 #download-button {
     background: transparent;
     color: #ffffff;
-    border:1;
+    border: 1px solid #000;
     border-radius: 20px;
     padding: 14px 24px;
     font-size: 18px;
@@ -59,13 +73,14 @@ input[type="file"] {
 #download-button:hover {
     background-color: #100a0a;
 }
-.logo{
+
+.logo {
     width: 100%;
     height: auto;
     margin: 0 auto;
-    size: 10 20;
 }
-.chandikayaga{
+
+.chandikayaga {
     width: 100%;
     height: auto;
     max-width: 100%;
@@ -74,13 +89,25 @@ input[type="file"] {
     padding-left: 20px;
     padding-right: 20px;
 }
-.footer{
+
+.footer {
+    position: relative; /* Changed from fixed to relative */
+    bottom: auto; /* Ensures no bottom offset */
+    left: 0;
+    right: 0;
+    background-color: white;
     color: #0b0b0b;
-    text-transform:lowercase;
-    text-align:center;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color:white
+    text-transform: lowercase;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Responsive design for mobile devices */
+@media only screen and (max-width: 768px) {
+    .footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+    }
 }
