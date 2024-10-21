@@ -69,25 +69,25 @@ zoomOutButton.addEventListener('click', () => {
 
 // Move Left
 moveLeftButton.addEventListener('click', () => {
-    imageX -= 20; // Move left
+    imageX -= 30; // Move left
     drawImages();
 });
 
 // Move Right
 moveRightButton.addEventListener('click', () => {
-    imageX += 20; // Move right
+    imageX += 30; // Move right
     drawImages();
 });
 
 // Move Up
 moveUpButton.addEventListener('click', () => {
-    imageY -= 20 ; // Move up
+    imageY -= 30 ; // Move up
     drawImages();
 });
 
 // Move Down
 moveDownButton.addEventListener('click', () => {
-    imageY += 20; // Move down
+    imageY += 30; // Move down
     drawImages();
 });
 
