@@ -2,6 +2,9 @@ body {
     background-image: url("background.jpg");
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 input[type="file"] {
@@ -102,12 +105,97 @@ input[type="file"] {
     padding: 10px;
 }
 
-/* Responsive design for mobile devices */
-@media only screen and (max-width: 768px) {
-    .footer {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        right: auto;
+.visitor-counter {
+    text-align: center;
+    margin: 20px 0;
+    color: rgb(20, 3, 3); /* Change this to match your design */
+    font-size: 18px;
+    align-items: center;
+}
+
+.navbar {
+    background-color: rgb(240, 44, 44);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-links {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links:hover {
+    color: rgb(255, 255, 255);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-icon {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .nav-item {
+        margin-right: 0;
+    }
+
+    .nav-links {
+        text-align: center;
+    }
+
+    #nav-menu.show {
+        display: block;
     }
 }
