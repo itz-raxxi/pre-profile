@@ -1,9 +1,13 @@
 let visitorCount = localStorage.getItem('visitorCount') ? parseInt(localStorage.getItem('visitorCount')) : 0;
 let visitorCountElement = document.getElementById('visitor-count');
+let downloadCount = localStorage.getItem('downloadCount') ? parseInt(localStorage.getItem('downloadCount')) : 0;
+let downloadCountElement = document.getElementById('download-count');
 
 visitorCount++;
 localStorage.setItem('visitorCount', visitorCount);
 visitorCountElement.textContent = visitorCount;
+
+downloadCountElement.textContent=downloadCount;
 
 const menuIcon = document.getElementById('menu-icon');
 const navMenu = document.getElementById('nav-menu');
@@ -56,6 +60,7 @@ function drawImages() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
     ctx.drawImage(userImage, imageX, imageY, userImage.width * scale, userImage.height * scale); 
     ctx.drawImage(maskImage, 0, 0, maskImage.width, maskImage.height);
+    requestAnimationFrame(drawImages);
 }
 
 // Mouse and touch events for drag and zoom
@@ -114,7 +119,7 @@ canvas.addEventListener('touchend', () => {
 // Function to download the canvas content as an image
 downloadButton.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'edited-image.png'; // Set the file name for download
+    link.download = 'pre-profile.jpg'; // Set the file name for download
     link.href = canvas.toDataURL(); // Convert canvas content to data URL
     link.click(); // Trigger download
 });
