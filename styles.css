@@ -108,16 +108,17 @@ input[type="file"] {
 .visitor-counter {
     text-align: center;
     margin: 20px 0;
-    color: rgb(20, 3, 3); /* Change this to match your design */
+    color: rgb(237, 159, 159); /* Change this to match your design */
     font-size: 18px;
     align-items: center;
+    display: none;
 }
 
 .navbar {
-    background-color: rgb(240, 44, 44);
+    background: linear-gradient(to right, rgb(255, 89, 0), rgb(198, 248, 254));
     padding: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
     align-items: center;
 }
 
@@ -142,8 +143,8 @@ input[type="file"] {
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    margin: 0;
-    padding: 0;
+  
+    float: left;
 }
 
 .nav-item {
@@ -152,11 +153,11 @@ input[type="file"] {
 
 .nav-links {
     text-decoration: none;
-    color: white;
+    color: rgb(246, 242, 242);
 }
 
 .nav-links:hover {
-    color: rgb(255, 255, 255);
+    color: rgb(18, 7, 7);
 }
 
 /* Responsive styles */
