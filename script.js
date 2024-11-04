@@ -60,7 +60,6 @@ function drawImages() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
     ctx.drawImage(userImage, imageX, imageY, userImage.width * scale, userImage.height * scale); 
     ctx.drawImage(maskImage, 0, 0, maskImage.width, maskImage.height);
-    requestAnimationFrame(drawImages);
 }
 
 // Mouse and touch events for drag and zoom
