@@ -1,14 +1,3 @@
-let visitorCount = localStorage.getItem('visitorCount') ? parseInt(localStorage.getItem('visitorCount')) : 0;
-let visitorCountElement = document.getElementById('visitor-count');
-let downloadCount = localStorage.getItem('downloadCount') ? parseInt(localStorage.getItem('downloadCount')) : 0;
-let downloadCountElement = document.getElementById('download-count');
-
-visitorCount++;
-localStorage.setItem('visitorCount', visitorCount);
-visitorCountElement.textContent = visitorCount;
-
-downloadCountElement.textContent=downloadCount;
-
 const menuIcon = document.getElementById('menu-icon');
 const navMenu = document.getElementById('nav-menu');
 
