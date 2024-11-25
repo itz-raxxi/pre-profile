@@ -107,7 +107,7 @@ canvas.addEventListener('touchend', () => {
 // Function to download the canvas content as an image
 downloadButton.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'pre-profile.jpg'; // Set the file name for download
+    link.download = 'pre-profile'; // Set the file name for download
     link.href = canvas.toDataURL(); // Convert canvas content to data URL
     link.click(); // Trigger download
 });
