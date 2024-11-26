@@ -30,12 +30,12 @@ input[type="file"] {
     max-width: 600px;
     height: auto;
 }
-.kannada{
+.kannada {
     color:#edaeae;
     text-align:center;
     font-size:small;
     text-decoration:solid;
-
+}
 .container {
     display: flex;
     flex-direction: column;
