@@ -107,46 +107,7 @@ canvas.addEventListener('touchend', () => {
 // Function to download the canvas content as an image
 downloadButton.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'pre-profile'; // Set the file name for download
+    link.download = 'pre-profile.jpg'; // Set the file name for download
     link.href = canvas.toDataURL(); // Convert canvas content to data URL
     link.click(); // Trigger download
-});        canvas.style.cursor = 'grabbing'; // Change cursor to grabbing
-    } else if (e.touches.length === 2) {
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.t ouches[0].clientY - e.touches[1].clientY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        scale = Math.max(0.1, Math.min(distance / 100, 3)); // Limit scale between 0.1 and 3
-    }
-});
-
-canvas.addEventListener('touchmove', (e) => {
-    if (isDragging && e.touches.length === 1) {
-        imageX = e.touches[0].clientX - startX;
-        imageY = e.touches[0].clientY - startY;
-        drawImages();
-    }
-});
-
-// Zoom functionality
-canvas.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    const zoomFactor = 0.1;
-    scale += e.deltaY > 0 ? -zoomFactor : zoomFactor;
-    scale = Math.max(0.1, Math.min(scale, 3)); // Limit scale between 0.1 and 3
-    drawImages();
-});
-
-// Download functionality
-downloadButton.addEventListener('click', () => {
-    const link = document.createElement('a');
-    link.download = 'canvas-image.png';
-    link.href = canvas.toDataURL();
-    link.click();
-});
-
-// Redraw images when the window is resized
-window.addEventListener('resize', () => {
-    canvas.width = maskImage.width;
-    canvas.height = maskImage.height;
-    drawImages();
 });
