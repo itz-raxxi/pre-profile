@@ -13,16 +13,15 @@ const downloadButton = document.getElementById('download-button');
 const maskImage = new Image();
 maskImage.src = 'mask.png'; // Replace with your mask PNG URL
 maskImage.onload = () => {
-    // Set canvas size to match the mask
     canvas.width = maskImage.width;
     canvas.height = maskImage.height;
     drawImages(); // Initial draw
 };
 
 let userImage = new Image();
-let imageX = 0; // Position of the user image on the canvas
-let imageY = 0; // Position of the user image on the canvas
-let scale = 1; // Scale factor for zooming
+let imageX = 0; 
+let imageY = 0; 
+let scale = 1; 
 let isDragging = false;
 let startX, startY;
 
@@ -34,24 +33,49 @@ fileInput.addEventListener('change', (event) => {
         reader.onload = function(e) {
             userImage.src = e.target.result;
             userImage.onload = function() {
-                // Center the image on the canvas
-                canvas.width = maskImage.width;
-                canvas.height = maskImage.height;
+                const canvasAspect = canvas.width / canvas.height;
+                const imageAspect = userImage.width / userImage.height;
+
+                if (imageAspect > canvasAspect) {
+                    scale = canvas.width / userImage.width;
+                } else {
+                    scale = canvas.height / userImage.height;
+                }
+
+                imageX = (canvas.width - userImage.width * scale) / 2;
+                imageY = (canvas.height - userImage.height * scale) / 2;
+
                 drawImages();
             };
+
+            userImage.onerror = function() {
+                alert('Error loading image. Please try a different file.');
+            };
         };
+
+        reader.onerror = function() {
+            alert('Error reading file. Please try again.');
+        };
+
+        // Check for valid image types
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!validImageTypes.includes(file.type)) {
+            alert('Invalid file type. Please upload a JPEG, PNG, or GIF image.');
+            fileInput.value = ''; // Clear the input
+            return;
+        }
+
         reader.readAsDataURL(file);
     }
 });
 
 // Function to draw images on canvas
 function drawImages() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(userImage, imageX, imageY, userImage.width * scale, userImage.height * scale); 
     ctx.drawImage(maskImage, 0, 0, maskImage.width, maskImage.height);
 }
 
-// Mouse and touch events for drag and zoom
 canvas.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.offsetX - imageX;
@@ -70,7 +94,6 @@ canvas.addEventListener('mousemove', (e) => {
     }
 });
 
-// Touch events for mobile devices
 canvas.addEventListener('touchstart', (e) => {
     if (e.touches.length === 1) {
         isDragging = true;
@@ -80,7 +103,7 @@ canvas.addEventListener('touchstart', (e) => {
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        scale = Math.max(0.1, Math.min(distance / 100, 3)); // Limit scale between 0.1 and 3
+        scale = Math.max(0.1, Math.min(distance / 100, 3));
     }
 });
 
@@ -89,14 +112,14 @@ canvas.addEventListener('touchmove', (e) => {
         imageX = e.touches[0].clientX - startX;
         imageY = e.touches[0].clientY - startY;
         drawImages();
-        e.preventDefault(); // Prevent scrolling
+        e.preventDefault();
     } else if (e.touches.length === 2) {
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        scale = Math.max(0.1, Math.min(distance / 100, 3)); // Limit scale between 0.1 and 3
+        scale = Math.max(0.1, Math.min(distance / 100, 3));
         drawImages();
-        e.preventDefault(); // Prevent scrolling
+        e.preventDefault();
     }
 });
 
@@ -107,7 +130,7 @@ canvas.addEventListener('touchend', () => {
 // Function to download the canvas content as an image
 downloadButton.addEventListener('click', () => {
     const link = document.createElement('a');
-    link.download = 'pre-profile.jpg'; // Set the file name for download
-    link.href = canvas.toDataURL(); // Convert canvas content to data URL
-    link.click(); // Trigger download
+    link.download = 'pre-profile.jpg';
+    link.href = canvas.toDataURL();
+    link.click();
 });
