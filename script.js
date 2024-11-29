@@ -88,8 +88,10 @@ canvas.addEventListener('mouseup', () => {
 
 canvas.addEventListener('mousemove', (e) => {
     if (isDragging) {
-        imageX = e.offsetX - startX;
-        imageY = e.offsetY - startY;
+        // Adjust the drag speed by multiplying the offset by a speed factor
+        const speedFactor = 1.5; // Increase this value to make dragging faster
+        imageX = (e.offsetX - startX) * speedFactor;
+        imageY = (e.offsetY - startY) * speedFactor;
         drawImages();
     }
 });
@@ -109,8 +111,8 @@ canvas.addEventListener('touchstart', (e) => {
 
 canvas.addEventListener('touchmove', (e) => {
     if (isDragging && e.touches.length === 1) {
-        imageX = e.touches[0].clientX - startX;
-        imageY = e.touches[0].clientY - startY;
+        const speedFactor = 1.5; // Increase this value to make dragging faster
+        imageX = (e.touches[0].clientX - startX) * speedFactor imageY = (e.touches[0].clientY - startY) * speedFactor;
         drawImages();
         e.preventDefault();
     } else if (e.touches.length === 2) {
